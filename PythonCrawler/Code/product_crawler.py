@@ -10,22 +10,20 @@ def getHTML(url):
     r = requests.get(url, headers = {'user-agent': 'Mozilla/5.0'})
     r.encoding = r.apparent_encoding
     if r.status_code != 200:
-        print "Error!"
-        return r.status_code
-    else:
-        return r.text.encode('utf-8')
+        raise Exception('NetworkError!')
+    return r.text.encode('utf-8')
 
-def getURLByPages(pageNum):
-    url1 = 'https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98vv14911&productId=5025518&score=0&sortType=5&'
+def getURL(productID, pageNum):
+    url1 = 'https://club.jd.com/comment/productPageComments.action?callback=fetchJSON_comment98vv14911&productId='
     url2 = 'page='
     url3 = '&pageSize=10&isShadowSku=0&fold=1'
     url2 += str(pageNum)
-    return url1 + url2 + url3
+    return url1 + str(productID) + '&score=0&sortType=5&' + url2 + url3
 
 def getHTMLByPages(pageNum):
     res = []
     for i in range(pageNum):
-        res.append(getHTML(getURLByPages(i)))        
+        res.append(getHTML(getURL(i)))
     return res
 
 def getComments(htmls):

@@ -4,9 +4,14 @@ import requests
 import bs4
 from bs4 import BeautifulSoup
 import re
-
+import os
 
 def getHTML(url):
+    r'''
+    Get the HTML text by the provided url.
+    :param url:
+    :return:
+    '''
     r = requests.get(url, headers = {'user-agent': 'Mozilla/5.0'})
     r.encoding = r.apparent_encoding
     if r.status_code != 200:
@@ -61,9 +66,23 @@ def saveFileInfo(path, info):
         f.write(info.encode('utf-8'))
 
 if __name__ == '__main__':
-    saveFileComments('comments.txt', getComments(getHTMLByPages(2)))
-    saveFileName('info.txt', getProductName(getHTML('https://item.jd.com/5025518.html#product-detail')))
-    saveFileInfo('info.txt', getHardwareInfo(getHTML('https://item.jd.com/5025518.html#product-detail')))
-    print 'OK!'
-   
+    # saveFileComments('comments.txt', getComments(getHTMLByPages(2)))
+    # saveFileName('info.txt', getProductName(getHTML('https://item.jd.com/5025518.html#product-detail')))
+    # saveFileInfo('info.txt', getHardwareInfo(getHTML('https://item.jd.com/5025518.html#product-detail')))
+    # print 'OK!'
+    with open(r'../ProductURLData/productID.txt', 'r') as f:
+        while True:
+            data = f.readline().split(',')
+            productID = data[0]
+            breakpoint = data[1]
+            for i in range(300):
+                url = getURL(productID, i)
+            try:
+                text = getHTML(url)
+                with open(r'../')
+            except:
+                continue
+
+
+
     

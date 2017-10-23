@@ -8,9 +8,9 @@ def deal_csv():
     url_data = data['URL']
     name_data = data['Name']
     count = 1
-    with open(r'../ProductURLData/productID.txt', 'a') as f:
-        for i in url_data:
-            f.write(i[20:-5] + ',' + str(count) + '\n')
+    with open(r'../ProductURLData/productID.txt', 'w') as f:
+        for i in range(len(url_data)):
+            f.write(name_data[i] + ',' + url_data[i][20:-5] + ',' + str(count) + '\n')
             count += 1
 
 if __name__ == '__main__':
